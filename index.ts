@@ -2,7 +2,6 @@ require('dotenv').config()
 
 import express from 'express';
 import mongoose from 'mongoose';
-import startServer from "./src/app";
 import {tickersRoutes} from "./src/routes/api/v1/tickers";
 import {mainRoutes} from "./src/routes";
 
@@ -17,8 +16,6 @@ mongoose.connect(process.env.DB_URI || '', {useUnifiedTopology: true, useNewUrlP
 
         const PORT = process.env.PORT || 5000;
         index.listen(PORT, () => console.log(`Server   : Running on port ${PORT}`));
-
-        await startServer();
     }
 );
 

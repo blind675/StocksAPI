@@ -1,25 +1,3 @@
-let lastKeyUsedIndex = 1;
-
-export function getAPIKey() {
-    lastKeyUsedIndex += 1;
-
-    if (lastKeyUsedIndex > 3) {
-        lastKeyUsedIndex = 1;
-    }
-
-    switch (lastKeyUsedIndex) {
-        case 1:
-            return process.env.POLYGON_KEY_1;
-        case 2:
-            return process.env.POLYGON_KEY_2;
-        case 3:
-            return process.env.POLYGON_KEY_3;
-
-        default:
-            return process.env.POLYGON_KEY_1;
-    }
-}
-
 export function sleep(ms: number) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
