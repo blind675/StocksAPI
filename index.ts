@@ -7,18 +7,21 @@ import mongoose from 'mongoose';
 import {tickersRoutes} from "./src/routes/api/v1/tickers";
 import {mainRoutes} from "./src/routes";
 
+const cors = require('cors');
+
 // setup Routs
-const index = express();
-index.use('/', mainRoutes);
-index.use('/api/v1/tickers', tickersRoutes);
-index.use('/api/v1/admin/problems', problemsRoutes);
+const app = express();
+app.use('/', mainRoutes);
+app.use('/api/v1/tickers', tickersRoutes);
+app.use('/api/v1/admin/problems', problemsRoutes);
+app.use(cors());
 
 // connect to DB and Start Server;
 mongoose.connect(process.env.DB_URI || '', {useUnifiedTopology: true, useNewUrlParser: true}, async () => {
         console.log('DB       : Connected')
 
         const PORT = process.env.PORT || 5000;
-        index.listen(PORT, () => console.log(`Server   : Running on port ${PORT}`));
+        app.listen(PORT, () => console.log(`Server   : Running on port ${PORT}`));
     }
 );
 
