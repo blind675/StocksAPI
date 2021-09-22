@@ -1,3 +1,5 @@
+import {problemsRoutes} from "./src/routes/api/v1/admin/problems";
+
 require('dotenv').config()
 
 import express from 'express';
@@ -9,6 +11,7 @@ import {mainRoutes} from "./src/routes";
 const index = express();
 index.use('/', mainRoutes);
 index.use('/api/v1/tickers', tickersRoutes);
+index.use('/api/v1/admin/problems', problemsRoutes);
 
 // connect to DB and Start Server;
 mongoose.connect(process.env.DB_URI || '', {useUnifiedTopology: true, useNewUrlParser: true}, async () => {
