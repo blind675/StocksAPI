@@ -1,6 +1,8 @@
 import {Router, Request, Response} from "express";
 import ProblemsModel, {Problems} from "../../../../models/Problems";
 
+const cors = require('cors');
+
 const router = Router();
 
 function mapProblemToResponse(problem: Problems) {
@@ -11,7 +13,7 @@ function mapProblemToResponse(problem: Problems) {
     }
 }
 
-router.get('/', async (request: Request, response: Response) => {
+router.get('/', cors(), async (request: Request, response: Response) => {
 
     const problems = await ProblemsModel.find({})
     const problemsResponse = problems.map(mapProblemToResponse);
@@ -29,7 +31,7 @@ router.delete('/:id', async (request: Request, response: Response) => {
     try {
         const res = await ProblemsModel.findByIdAndRemove(id);
 
-        if(res) {
+        if (res) {
             response.status(200).send("ok");
         } else {
             response.status(500).send("Id not found in DB");
