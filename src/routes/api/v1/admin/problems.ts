@@ -19,4 +19,19 @@ router.get('/', async (request: Request, response: Response) => {
     response.json(problemsResponse)
 });
 
+router.delete('/:id', async (request: Request, response: Response) => {
+    const {id} = request.params;
+
+    if (!id) {
+        response.status(400).send("Please specify an id");
+    }
+    const res = await ProblemsModel.remove({_id: id});
+
+    if (res.deletedCount === 0) {
+        response.status(500).send("Id not in database");
+    } else {
+        response.status(200).send("ok");
+    }
+});
+
 export const problemsRoutes = router;
