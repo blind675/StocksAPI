@@ -23,14 +23,19 @@ router.delete('/:id', async (request: Request, response: Response) => {
     const {id} = request.params;
 
     if (!id) {
-        response.status(400).send("Please specify an id");
+        response.status(400).send("Please specify an Id");
     }
-    const res = await ProblemsModel.remove({_id: id});
 
-    if (res.deletedCount === 0) {
-        response.status(500).send("Id not in database");
-    } else {
-        response.status(200).send("ok");
+    try {
+        const res = await ProblemsModel.findByIdAndRemove(id);
+
+        if(res) {
+            response.status(200).send("ok");
+        } else {
+            response.status(500).send("Id not found in DB");
+        }
+    } catch (error) {
+        response.status(500).send(error.message);
     }
 });
 
