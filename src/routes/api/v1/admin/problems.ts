@@ -34,8 +34,10 @@ router.delete('/:id', async (request: Request, response: Response) => {
         } else {
             response.status(500).send("Id not found in DB");
         }
-    } catch (error) {
-        response.status(500).send(error.message);
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            response.status(500).send(error.message);
+        }
     }
 });
 
