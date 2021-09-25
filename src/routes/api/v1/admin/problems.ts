@@ -21,24 +21,24 @@ router.get('/', cors(), async (request: Request, response: Response) => {
     response.json(problemsResponse)
 });
 
-router.delete('/:id', async (request: Request, response: Response) => {
+router.delete('/:id', cors(), async (request: Request, response: Response) => {
     const {id} = request.params;
 
     if (!id) {
-        response.status(400).send("Please specify an Id");
+        response.status(400).json({success: false, message: "Please specify an Id"});
     }
 
     try {
         const res = await ProblemsModel.findByIdAndRemove(id);
 
         if (res) {
-            response.status(200).send("ok");
+            response.status(200).json({success: true});
         } else {
-            response.status(500).send("Id not found in DB");
+            response.status(500).json({success: false, message: "Id not found in DB"});
         }
     } catch (error: unknown) {
         if (error instanceof Error) {
-            response.status(500).send(error.message);
+            response.status(500).json({success: false, message: error.message});
         }
     }
 });
