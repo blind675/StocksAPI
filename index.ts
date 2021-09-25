@@ -2,6 +2,8 @@ import {problemsRoutes} from "./src/routes/api/v1/admin/problems";
 
 require('dotenv').config()
 
+const cors = require('cors');
+
 import express from 'express';
 import mongoose from 'mongoose';
 import {tickersRoutes} from "./src/routes/api/v1/tickers";
@@ -10,6 +12,7 @@ import {mainRoutes} from "./src/routes";
 // setup Routs
 const app = express();
 
+app.use(cors());
 app.use('/', mainRoutes);
 app.use('/api/v1/tickers', tickersRoutes);
 app.use('/api/v1/admin/problems', problemsRoutes);
